@@ -1,0 +1,30 @@
+# ==================================
+# ASP.NET Core - Dynamic Uploads in wwwroot
+# ==================================
+**/wwwroot/uploads/
+**/wwwroot/images/profiles/
+
+# ==================================
+# ASP.NET Core - Build & Configs
+# ==================================
+**/bin/
+**/obj/
+**/.vs/
+**/.vscode/
+**/appsettings.Development.json
+**/appsettings.Local.json
+*.user
+*.userosscache
+
+# ==================================
+# React / Node Dependencies & Build
+# ==================================
+**/node_modules/
+**/build/
+**/dist/
+**/.env.local
+**/.env.development.local
+**/.env.production.local
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*

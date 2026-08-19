@@ -1,0 +1,7 @@
+# React & Tailwind Standards
+- Use functional components with arrow functions.
+- Always use the custom theme variables: --color-brand for primary actions and --color-secondary for muted text.
+- Follow a modular component structure.
+- Use 'lucide-react' for icons if available.
+- Prioritize clean, minimalist AMOLED-style UI (bg-slate-950).
+- When creating forms, use 'react-hook-form' and the custom 'FormInput' component.
