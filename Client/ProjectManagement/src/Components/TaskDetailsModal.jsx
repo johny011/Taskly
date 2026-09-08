@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react'
 import { useDeleteTask, useGetTaskDetails } from './hooks/useTask'
-import { useProject } from './hooks/useProject'
 import TaskDetailsTab from './TaskDetailsTab'
 import TaskFilesTab from './TaskFilesTab'
 import TaskCommentsTab from './TaskCommentsTab'
@@ -8,9 +7,7 @@ import TaskMembersTab from './TaskMembersTab'
 import useProjectStore from '../Store/useProjectStore'
 import { HubConnectionBuilder, LogLevel } from '@microsoft/signalr'
 import { useQueryClient } from '@tanstack/react-query'
-import { useTaskDetailsModal } from '../Store/useTaskDetailsModal'
 import toast from 'react-hot-toast'
-import { useNavigate } from 'react-router-dom'
 
 export default function TaskDetailsModal({ projectId, taskId, taskText, onClose }) {
     const { data: task, isLoading, error } = useGetTaskDetails({ projectId, taskId })
@@ -37,12 +34,12 @@ export default function TaskDetailsModal({ projectId, taskId, taskText, onClose 
 
         async function startConnection() {
             try {
-                
+
                 await connection.start();
                 await connection.invoke('JoinTaskGroup', `${taskId}`);
                 console.log('Joined task group for taskId:', taskId);
 
-                
+
                 connection.on('TaskUpdated', () => {
                     queryClient.invalidateQueries({ queryKey: ['taskDetails', projectId, taskId] });
                 });
@@ -144,17 +141,19 @@ export default function TaskDetailsModal({ projectId, taskId, taskText, onClose 
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
                             </svg>
                         </button>
-                        <button
-                            type="button"
-                            onClick={onDeleteTask}
-                            className="inline-flex items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-sm font-medium text-secondary backdrop-blur-md transition-colors hover:border-red-400/30 hover:bg-red-500/10 hover:text-red-300"
-                            aria-label="delete task"
-                        >
-                            <svg className="h-4 w-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden>
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 7h12m-10 0V5a2 2 0 012-2h4a2 2 0 012 2v2m-8 0h8m-9 0l1 12a2 2 0 002 2h4a2 2 0 002-2l1-12" />
-                            </svg>
-                            <span className="hidden sm:inline">Delete</span>
-                        </button>
+                        { canManage &&
+                            <button
+                                type="button"
+                                onClick={onDeleteTask}
+                                className="inline-flex items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-sm font-medium text-secondary backdrop-blur-md transition-colors hover:border-red-400/30 hover:bg-red-500/10 hover:text-red-300"
+                                aria-label="delete task"
+                            >
+                                <svg className="h-4 w-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden>
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 7h12m-10 0V5a2 2 0 012-2h4a2 2 0 012 2v2m-8 0h8m-9 0l1 12a2 2 0 002 2h4a2 2 0 002-2l1-12" />
+                                </svg>
+                                <span className="hidden sm:inline">Delete</span>
+                            </button>
+                        }
                     </div>
 
                 </div>

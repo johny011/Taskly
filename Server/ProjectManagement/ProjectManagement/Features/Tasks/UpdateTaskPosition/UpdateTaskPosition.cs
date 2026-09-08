@@ -35,8 +35,6 @@ public class UpdateTaskPositionCommandHandler : IRequestHandler<UpdateTaskPositi
     private readonly IHubContext<ActivityHub> activityHub;
     private readonly IPublisher publisher;
     private readonly IHttpContextAccessor httpContextAccessor;
-    private const string MinRank = "0|000000:";
-    private const string MaxRank = "z|zzzzz:";
 
     public UpdateTaskPositionCommandHandler(ApplicationDbContext context,
         IHubContext<ProjectHub> projectHub,
@@ -65,15 +63,12 @@ public class UpdateTaskPositionCommandHandler : IRequestHandler<UpdateTaskPositi
         if (request.NextTaskId.HasValue)
             nextTask = await _context.Tasks.AsNoTracking().FirstOrDefaultAsync(t => t.Id == request.NextTaskId, cancellationToken);
 
-        string prevRank = prevTask?.Rank ?? MinRank;
-        string nextRank = nextTask?.Rank ?? MaxRank;
+        string prevRank = prevTask?.Rank;
+        string nextRank = nextTask?.Rank;
 
-        if (prevRank == nextRank)
-        {
-            nextRank = nextRank + "z";
-        }
+        string updatedRank = LexoRankHelper.GetRankBetween(prevRank, nextRank);
 
-        task.Rank = CalculateLexorank(prevRank, nextRank);
+        task.Rank = updatedRank;
         task.Status = request.NewStatus;
 
         await _context.SaveChangesAsync(cancellationToken);
@@ -95,46 +90,7 @@ public class UpdateTaskPositionCommandHandler : IRequestHandler<UpdateTaskPositi
         await activityHub.Clients.Group($"activity_{task.ProjectId.ToString()}").SendAsync("TaskUpdated", cancellationToken);
     }
 
-    private string CalculateLexorank(string prev, string next)
-    {
-        var p = prev ?? MinRank;
-        var n = next ?? MaxRank;
-        var result = new System.Text.StringBuilder();
-        int i = 0;
-
-        while (true)
-        {
-            char charP = i < p.Length ? p[i] : '0';
-            char charN = i < n.Length ? n[i] : 'z';
-
-            if (charP == charN)
-            {
-                result.Append(charP);
-                i++;
-                continue;
-            }
-
-            int mid = (charP + charN) / 2;
-
-            if (mid > charP)
-            {
-                result.Append((char)mid);
-                break;
-            }
-            else
-            {
-
-                result.Append(charP);
-                i++;
-                if (i >= p.Length)
-                {
-                    result.Append('M'); 
-                    break;
-                }
-            }
-        }
-        return result.ToString();
-    }
+    
 }
 
 // 3. Controller

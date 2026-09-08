@@ -6,11 +6,23 @@ export default function Column({ status, tasks }) {
     const { setNodeRef } = useDroppable({
         id: status
     })
+    const getColumnName = (status) => {
+        switch(status) {
+            case "ToDo":
+                return "To Do";
+            case "InProgress":
+                return "In Progress";
+            case "Done":
+                return "Done";
+            default:
+                return status;
+        }
+    }
 
     return (
         <section className='rounded-3xl border border-white/5 bg-white/2 p-4' ref={setNodeRef}>
             <div className='flex items-center justify-between gap-2'>
-                <h2 className='text-md font-medium tracking-wide'>{status.toUpperCase()}</h2>
+                <h2 className='text-md font-medium tracking-wide'>{getColumnName(status)}</h2>
                 <span className='rounded-full border border-white/10 bg-white/6 px-2 py-0.5 text-xs text-secondary'>
                     {tasks.length}
                 </span>

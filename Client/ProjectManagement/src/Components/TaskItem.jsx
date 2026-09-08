@@ -12,9 +12,7 @@ export default function TaskItem({ task }) {
     const canManage = useProjectStore((state)=>state.project.role == "Manager" || state.project.role == "Owner");
     const { id: projectId } = useParams();
     const openTaskDetailsModal = ()=>{
-        console.log("Opening Task Details Modal for task:", task.id, "in project:", projectId);
         useTaskDetailsModal.getState().openModal(task.id, Number(projectId),task.text,task.status);
-        console.log("Modal state after opening:", useTaskDetailsModal.getState());
     }
     const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id: task.id,disabled:!canManage });
 

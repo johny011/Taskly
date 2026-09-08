@@ -29,7 +29,7 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("CORS", policy =>
     {
-        policy.WithOrigins("http://localhost:5173").WithOrigins("https://restive-tres-pamala.ngrok-free.dev")
+        policy.WithOrigins("http://localhost:5173").WithOrigins("https://taskly-ayx0002c8-svu8.vercel.app/")
         .AllowAnyHeader()
         .AllowAnyMethod()
         .AllowCredentials();
@@ -121,7 +121,6 @@ builder.Services.AddAuthentication(options =>
     });
 builder.Services.Configure<ClaimsIdentityOptions>(options =>
 {
-    // ���� Identity �������� ������� �������� �� JWT ����� �� ����� SOAP
     options.UserIdClaimType = JwtRegisteredClaimNames.Sub;
     options.UserNameClaimType = JwtRegisteredClaimNames.Name;
     options.RoleClaimType = "role";

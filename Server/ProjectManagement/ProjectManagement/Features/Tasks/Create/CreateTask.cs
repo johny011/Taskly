@@ -41,21 +41,17 @@ public class CreateTaskCommandHandler : IRequestHandler<CreateTaskCommand>
     {
         var task = mapper.Map<EntityTask>(request);
 
-        // 1. جلب آخر مهمة (أعلى رتبة) في نفس المشروع ونفس الحالة
         var lastTask = await context.Tasks
             .Where(t => t.ProjectId == request.ProjectId && t.Status == request.Status)
             .OrderByDescending(t => t.Rank)
             .FirstOrDefaultAsync(cancellationToken);
 
-        // 2. تعيين الرتبة الجديدة
         if (lastTask == null)
         {
-            // إذا كان العمود فارغاً، نعطي رتبة متوسطة افتراضية
-            task.Rank = "0|h00000:";
+            task.Rank = LexoRankHelper.GetInitialRank();
         }
         else
         {
-            // توليد رتبة تأتي بعد آخر رتبة موجودة
             task.Rank = LexoRankHelper.GetRankAfter(lastTask.Rank);
         }
 

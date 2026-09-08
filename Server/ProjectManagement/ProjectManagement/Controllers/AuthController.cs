@@ -42,7 +42,7 @@ public class AuthController : ControllerBase
         if (!ModelState.IsValid) return BadRequest(ModelState);
 
         var userByEmail = await _userManager.FindByEmailAsync(model.Email);
-        if (userByEmail != null) return BadRequest(new { message = "Email is already registered." });
+        if (userByEmail != null) return BadRequest(new { errors =new string []{ "Email is already registered."} });
 
         var user = new User { FullName = model.FullName, UserName = model.Email, Email = model.Email };
         var result = await _userManager.CreateAsync(user, model.Password);

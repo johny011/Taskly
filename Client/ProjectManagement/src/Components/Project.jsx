@@ -94,7 +94,7 @@ const Project = () => {
     const [deleteProjectOpen, setDeleteProjectOpen] = useState(false)
 
     const isOwnerOrManager = project?.role == "Owner" || project?.role == "Manager"
-
+    const isOwner = project?.role == "Owner";
     const stats = useMemo(() => {
         const total = tasks.length
         const inProgress = tasks.filter((t) => t.status === 'InProgress').length
@@ -174,6 +174,7 @@ const Project = () => {
                                     <icons.edit className="h-4 w-4 shrink-0" />
                                     <span className="hidden sm:inline">Edit</span>
                                 </button>
+                                { isOwner &&
                                 <button
                                     type="button"
                                     onClick={() => setDeleteProjectOpen(true)}
@@ -184,6 +185,7 @@ const Project = () => {
                                     <icons.trash className="h-4 w-4 shrink-0" />
                                     <span className="hidden sm:inline">Delete</span>
                                 </button>
+                                }
                                 <button
                                     type="button"
                                     className="inline-flex items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-sm font-medium text-secondary backdrop-blur-md transition-colors hover:border-brand/30 hover:bg-brand/10 hover:text-brand"
@@ -279,7 +281,7 @@ const Project = () => {
                 </div>
             ) : (
                 <div className="rounded-4xl border border-dashed border-white/10 bg-white/5 py-20 text-center backdrop-blur-md">
-                    <p className="text-lg text-secondary">Project not found or has been moved.</p>
+                    <p className="text-lg text-secondary">Project not found or has been removed.</p>
                     <Link to="/" className="mt-4 inline-block font-bold text-brand">
                         Return home
                     </Link>

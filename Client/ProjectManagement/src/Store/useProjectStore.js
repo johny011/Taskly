@@ -4,7 +4,18 @@ import { useTaskStore } from './useTaskStore';
 import { useQueryClient } from '@tanstack/react-query';
 import { useTaskDetailsModal } from './useTaskDetailsModal';
 import toast from 'react-hot-toast';
-
+const showInfoToast = (message) => {
+    toast(message, {
+      icon: 'ℹ️',
+      duration: 5000,
+      style: {
+        borderRadius: '8px',
+        background: '#EFF6FF', // خلفية زرقاء فاتحة (Light Blue)
+        color: '#1E40AF',      // نص أزرق داكن (Dark Blue)
+        border: '1px solid #93C5FD',
+      },
+    });
+  };
 const useProjectStore = create((set, get) => ({
 	projectId: null,
 	project: null,
@@ -55,7 +66,7 @@ const useProjectStore = create((set, get) => ({
 
 			connection.on("TaskDeleted", (task) => {
 				if (useTaskDetailsModal.getState().isOpen && useTaskDetailsModal.getState().taskId === task.taskId) {
-					toast.error('Task has been deleted', { position: 'top-center' });
+					showInfoToast('Task has been deleted');
 					useTaskDetailsModal.getState().closeModal();
 				}
 				if (useTaskStore.getState().tasks.find(t => t.id === task.taskId)) {
