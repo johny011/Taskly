@@ -29,7 +29,7 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("CORS", policy =>
     {
-        policy.WithOrigins("http://localhost:5173").WithOrigins("https://taskly-ayx0002c8-svu8.vercel.app/")
+        policy.WithOrigins("http://localhost:5173").WithOrigins("https://taskly-a17kxl2y4-svu8.vercel.app")
         .AllowAnyHeader()
         .AllowAnyMethod()
         .AllowCredentials();
@@ -142,7 +142,7 @@ var webRootPath = app.Environment.WebRootPath ?? Path.Combine(app.Environment.Co
 Directory.CreateDirectory(Path.Combine(webRootPath, "uploads"));
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+//if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
