@@ -18,7 +18,7 @@ function Home() {
     <>
       <div className='min-h-screen bg-slate-950 relative font-sans text-white'>
         {/* لمسات الإضاءة الخلفية (AMOLED Blobs) لتستمر عبر كل الصفحات */}
-        <div className="pointer-events-none absolute top-0 left-1/4 w-96 h-96 bg-brand/5 rounded-full blur-[120px]"></div>
+        <div className="pointer-events-none absolute top-0 left-1/4  h-96 bg-brand/5 rounded-full blur-[120px]"></div>
         <div className="pointer-events-none absolute bottom-0 right-1/4 w-96 h-96 bg-brand/5 rounded-full blur-[120px]"></div>
 
         <Navbar />
