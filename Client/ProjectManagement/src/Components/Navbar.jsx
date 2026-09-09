@@ -69,7 +69,7 @@ export default function Navbar() {
                     <div className="bg-brand/20 p-2 rounded-lg group-hover:bg-brand/30 transition-colors">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-layout-list-icon lucide-layout-list"><rect width="7" height="7" x="3" y="3" rx="1"/><rect width="7" height="7" x="3" y="14" rx="1"/><path d="M14 4h7"/><path d="M14 9h7"/><path d="M14 15h7"/><path d="M14 20h7"/></svg>
                     </div>
-                    <span className="text-white text-xl font-bold tracking-tight">Project</span>
+                    <span className="text-white text-xl font-bold tracking-tight hidden md:block">Project</span>
                 </Link>
 
                 {/* Search Bar - AMOLED Style */}

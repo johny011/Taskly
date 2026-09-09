@@ -29,7 +29,7 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("CORS", policy =>
     {
-        policy.WithOrigins("http://localhost:5173").WithOrigins("https://taskly-a17kxl2y4-svu8.vercel.app")
+        policy.WithOrigins("http://localhost:5173").WithOrigins("https://taskly-ecru-seven.vercel.app")
         .AllowAnyHeader()
         .AllowAnyMethod()
         .AllowCredentials();
