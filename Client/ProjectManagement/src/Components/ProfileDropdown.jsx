@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import useProfileDropdown from './hooks/useProfileDropdown'
+import UserImage from './UserImage'
 
 function getFallbackInitials(user, getInitials) {
   if (typeof getInitials === 'function') {
@@ -44,7 +45,7 @@ export default function ProfileDropdown({ user, getInitials }) {
       >
         <div className="flex h-10 w-10 items-center justify-center overflow-hidden rounded-xl bg-brand text-sm font-bold text-white shadow-lg shadow-brand/20">
           {user?.imageUrl ? (
-            <img src={user.imageUrl} alt={displayName} className="h-full w-full object-cover" />
+            <UserImage user={user} />
           ) : (
             <span>{initials}</span>
           )}
